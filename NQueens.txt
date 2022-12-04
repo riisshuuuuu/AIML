@@ -1,0 +1,60 @@
+n=4
+def true_Move(board,row,col):
+            
+            # checking -------------------------- same row
+            i=col
+            while i>=0:
+                if board[row][i]:
+                    return False
+                i-=1
+            
+            #checking------------------------ top-left
+            i=row
+            j=col
+            while (i>=0 and j>=0):
+                if board[i][j]:
+                    return False
+                i-=1
+                j-=1
+            
+            # checking---------------------- bottom-left
+            i=row
+            j=col
+            while (i<n and j>=0):
+                if board[i][j]:
+                    return False
+                i+=1
+                j-=1
+            return True
+        
+
+def solve(board,col):
+            
+            if (col==n):             #---------------------if we found sol.
+                out.append([])
+                for i in range(n):
+                    out[-1].append("")
+                    for j in range(n):
+                        if board[i][j]:
+                            out[-1][-1]+="q"
+                        else:
+                            out[-1][-1]+="-"
+                return
+            
+            # --------------------------------------------------all row values of that column
+            for i in range(n):
+                if true_Move(board,i,col):
+                    board[i][col]=1
+                    solve(board,col+1)
+                    board[i][col]=0
+            return
+        
+out=[]      
+board=[]  
+for i in range(n):
+    board.append([])
+    for j in range(n):
+        board[-1].append(0)
+solve(board,0)
+board.clear()
+print (out)
